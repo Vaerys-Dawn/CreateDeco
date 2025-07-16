@@ -1,5 +1,6 @@
 package com.github.talrey.createdeco.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -10,6 +11,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.MultifaceBlock;
 import net.minecraft.world.level.block.MultifaceSpreader;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -24,6 +26,11 @@ public class FacadeBlock extends MultifaceBlock implements IWrenchable, SimpleWa
   public FacadeBlock(Properties properties) {
     super(properties);
     this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, false));
+  }
+
+  @Override
+  protected MapCodec<? extends MultifaceBlock> codec() {
+    return BlockBehaviour.simpleCodec(FacadeBlock::new);
   }
 
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

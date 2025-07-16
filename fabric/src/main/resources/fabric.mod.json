@@ -3,29 +3,36 @@
   "id": "createdeco",
   "version": "${version}",
   "name": "Create Deco",
-  "description": "Decorative options for your Create factory",
+  "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
-    "Kayla, Talrey"
+    "Me!"
   ],
-  "license": "Insert License Here",
-  "icon": "icon.png",
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/createdeco/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.talrey.createdeco.fabric.CreateDecoModFabric"
+      "com.github.talrey.fabric.ExampleModFabric"
     ],
-    "fabric-datagen": [
-      "com.github.talrey.createdeco.fabric.CreateDecoModData"
+    "client": [
+      "com.github.talrey.fabric.client.ExampleModFabricClient"
     ]
   },
   "mixins": [
-    "createdeco.mixins.json",
-    "createdeco-common.mixins.json"
+    "createdeco.mixins.json"
   ],
   "depends": {
-    "minecraft": "${minecraft_version}",
-    "fabricloader": ">=${fabric_loader_version}",
-    "fabric-api": ">=${fabric_api_version}",
-    "create": ">=0.5.1-c-build.1105+mc1.20.1"
+    "fabricloader": ">=0.16.14",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "architectury": ">=13.0.8",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
   }
 }

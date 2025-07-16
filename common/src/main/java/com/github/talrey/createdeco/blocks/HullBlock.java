@@ -1,11 +1,13 @@
 package com.github.talrey.createdeco.blocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.shapes.BooleanOp;
@@ -29,6 +31,11 @@ public class HullBlock extends DirectionalBlock {
 
   public HullBlock (Properties props) {
     super(props);
+  }
+
+  @Override
+  protected MapCodec<? extends DirectionalBlock> codec() {
+    return BlockBehaviour.simpleCodec(HullBlock::new);
   }
 
   @Override

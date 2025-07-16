@@ -1,16 +1,13 @@
 architectury {
-    common(rootProject.enabled_platforms.split(","))
-}
-
-loom {
-    accessWidenerPath = file("src/main/resources/createdeco.accesswidener")
+    common rootProject.enabled_platforms.split(',')
 }
 
 repositories {
     // mavens for Create Fabric and dependencies
     maven { url = "https://api.modrinth.com/maven" } // LazyDFU
     maven { url = "https://maven.terraformersmc.com/releases/" } // Mod Menu
-    maven { url = "https://mvn.devos.one/snapshots/" } // Create Fabric, Porting Lib, Forge Tags, Milk Lib, Registrate Fabric
+    maven { url = "https://mvn.devos.one/snapshots/" }
+    // Create Fabric, Porting Lib, Forge Tags, Milk Lib, Registrate Fabric
     maven { url = "https://mvn.devos.one/releases/" } // Porting Lib
     maven { url = "https://cursemaven.com" } // Forge Config API Port
     maven { url = "https://maven.cafeteria.dev/releases" } // Fake Player API
@@ -19,41 +16,30 @@ repositories {
         url = "https://jitpack.io/"
         content { includeGroupAndSubgroups("com.github") }
     }
+    maven {
+        name = 'sponge'
+        url = 'https://repo.spongepowered.org/maven'
+    }
+    maven {
+        name = 'NeoForged'
+        url = 'https://maven.neoforged.net/releases'
+    }
 }
 
 dependencies {
-    // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
-    // Do NOT use other classes from fabric loader
-    modImplementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
-    // Compile against Create Fabric in common
-    // beware of differences across platforms!
-    // dependencies must also be pulled in to minimize problems, from remapping issues to compile errors.
-    // All dependencies except Flywheel and Registrate are NOT safe to use!
-    // Flywheel and Registrate must also be used carefully due to differences.
-    modCompileOnly("com.simibubi.create:create-fabric-${minecraft_version}:${create_fabric_version}")
-}
+    minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
 
-processResources {
-    exclude("resourcepacks/")
-}
+    // We depend on Fabric Loader here to use the Fabric @Environment annotations,
+    // which get remapped to the correct annotations on each platform.
+    // Do NOT use other classes from Fabric Loader.
+    modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
 
-sourceSets.main {
-    resources {
-        srcDir("src/generated/resources")
-        exclude("src/generated/resources/.cache")
-    }
-}
+    // Architectury API. This is optional, and you can comment it out if you don't need it.
+    modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
 
-publishing {
-    publications {
-        mavenCommon(MavenPublication) {
-            artifactId = rootProject.archives_base_name
-            from components.java
-        }
-    }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
-    }
+    modCompileOnly("net.neoforged:neoforge:$project.neoforge_version")
+    modCompileOnly("org.spongepowered:mixin:${mixin_version}")
+    modCompileOnly("com.tterrag.registrate:Registrate:${registrate_neoforge_version}")
+    modCompileOnly("com.simibubi.create:create-${minecraft_version}:${create_neoforge_version}")
+    implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_neoforge_version}")
 }

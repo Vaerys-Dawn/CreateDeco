@@ -1,5 +1,6 @@
 package com.github.talrey.createdeco;
 
+import com.github.talrey.createdeco.blocks.subclasses.DecoStairsBlock;
 import com.simibubi.create.content.decoration.palettes.ConnectedGlassPaneBlock;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.providers.DataGenContext;
@@ -14,10 +15,10 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
 
 public class BlockStateGenerator {
+
   @ExpectPlatform
   public static void bar (
     String base, String suf, ResourceLocation barTexture, ResourceLocation postTexture,
@@ -104,8 +105,8 @@ public class BlockStateGenerator {
 
   @ExpectPlatform
   public static void door (
-    CreateRegistrate reg, String metal, boolean locked,
-    DataGenContext<Block, ?> ctx, RegistrateBlockstateProvider prov
+          CreateRegistrate reg, String metal, boolean locked,
+          DataGenContext<Block, ?> ctx, RegistrateBlockstateProvider prov
   ) {
     throw new AssertionError();
   }
@@ -191,7 +192,7 @@ public class BlockStateGenerator {
 
   @ExpectPlatform
   public static void brickStair (
-    DataGenContext<Block, StairBlock> ctx, RegistrateBlockstateProvider prov, String color
+          DataGenContext<Block, DecoStairsBlock> ctx, RegistrateBlockstateProvider prov, String color
   ) {
     throw new AssertionError();
   }

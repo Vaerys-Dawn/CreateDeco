@@ -3,6 +3,7 @@ package com.github.talrey.createdeco.api;
 import com.github.talrey.createdeco.BlockRegistry;
 import com.github.talrey.createdeco.BlockStateGenerator;
 import com.github.talrey.createdeco.CreateDecoMod;
+import com.github.talrey.createdeco.blocks.subclasses.DecoStairsBlock;
 import com.simibubi.create.content.decoration.palettes.AllPaletteStoneTypes;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.builders.BlockBuilder;
@@ -89,9 +90,9 @@ public class Bricks {
     return ret;
   }
 
-  public static ArrayList<BlockBuilder<StairBlock,?>> buildStair (CreateRegistrate reg, String color) {
+  public static ArrayList<BlockBuilder<DecoStairsBlock,?>> buildStair (CreateRegistrate reg, String color) {
     String name;
-    ArrayList<BlockBuilder<StairBlock, ?>> ret = new ArrayList<>();
+    ArrayList<BlockBuilder<DecoStairsBlock, ?>> ret = new ArrayList<>();
 
     for (String prefix : TYPES) {
       if (color.isEmpty() && prefix.isEmpty()) continue;
@@ -100,7 +101,7 @@ public class Bricks {
       if (color.contains("red") && prefix.isEmpty()) continue;
 
       String finalName = name; // "effectively final" for lambda purposes
-      ret.add(reg.block(name, p -> new StairBlock(Blocks.BRICK_STAIRS.defaultBlockState(), p))
+      ret.add(reg.block(name, p -> DecoStairsBlock.factory(Blocks.BRICK_STAIRS.defaultBlockState(), p))
         .initialProperties(() -> Blocks.BRICKS)
         .properties(props -> props
           .strength(2, 6)
@@ -263,7 +264,7 @@ public class Bricks {
       .requires(DataIngredient.items( (dye == null)
         ? Blocks.BRICKS
         : BlockRegistry.BRICKS.get(dye).get(original)
-      ))
+      ).toVanilla())
       .requires(Blocks.VINE)
       .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(
         (dye == null)
@@ -276,7 +277,7 @@ public class Bricks {
         .requires(DataIngredient.items( (dye == null)
             ? Blocks.BRICKS
             : BlockRegistry.BRICKS.get(dye).get(original)
-        ))
+        ).toVanilla())
         .requires(Blocks.MOSS_BLOCK)
         .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(
             (dye == null)

@@ -1,11 +1,13 @@
 package com.github.talrey.createdeco.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FaceAttachedHorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.AttachFace;
@@ -23,6 +25,11 @@ public class DecalBlock extends FaceAttachedHorizontalDirectionalBlock implement
   public DecalBlock(Properties properties) {
     super(properties);
     this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(FACE, AttachFace.WALL));
+  }
+
+  @Override
+  protected MapCodec<? extends FaceAttachedHorizontalDirectionalBlock> codec() {
+    return BlockBehaviour.simpleCodec(DecalBlock::new);
   }
 
   public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

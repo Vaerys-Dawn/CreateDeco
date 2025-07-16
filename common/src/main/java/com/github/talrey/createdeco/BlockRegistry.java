@@ -2,9 +2,12 @@ package com.github.talrey.createdeco;
 
 import com.github.talrey.createdeco.api.*;
 import com.github.talrey.createdeco.blocks.*;
+import com.github.talrey.createdeco.blocks.subclasses.DecoBarsBlock;
+import com.github.talrey.createdeco.blocks.subclasses.DecoDoorBlock;
+import com.github.talrey.createdeco.blocks.subclasses.DecoStairsBlock;
+import com.github.talrey.createdeco.blocks.subclasses.DecoTrapDoorBlock;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.AllTags;
 import com.simibubi.create.content.decoration.MetalLadderBlock;
 import com.simibubi.create.content.decoration.palettes.ConnectedGlassPaneBlock;
 import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
@@ -21,7 +24,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.WallBlock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,7 +51,7 @@ public class BlockRegistry {
 	}};
 
 	public static HashMap<DyeColor, HashMap<String, BlockEntry<Block>>>      BRICKS = new HashMap<>();
-	public static HashMap<DyeColor, HashMap<String, BlockEntry<StairBlock>>> STAIRS = new HashMap<>();
+	public static HashMap<DyeColor, HashMap<String, BlockEntry<DecoStairsBlock>>> STAIRS = new HashMap<>();
 	public static HashMap<DyeColor, HashMap<String, BlockEntry<SlabBlock>>>   SLABS = new HashMap<>();
 	public static HashMap<DyeColor, HashMap<String, BlockEntry<WallBlock>>>   WALLS= new HashMap<>();
 
@@ -58,11 +63,11 @@ public class BlockRegistry {
 
 	public static HashMap<String, BlockEntry<WindowBlock>> WINDOWS      = new HashMap<>();
 	public static HashMap<String, BlockEntry<WindowBlock>> WINDOW_PANES = new HashMap<>();
-	public static HashMap<String, BlockEntry<DoorBlock>> DOORS          = new HashMap<>();
-	public static HashMap<String, BlockEntry<DoorBlock>> LOCK_DOORS     = new HashMap<>();
-	public static HashMap<String, BlockEntry<TrapDoorBlock>> TRAPDOORS  = new HashMap<>();
-	public static HashMap<String, BlockEntry<IronBarsBlock>> BARS       = new HashMap<>();
-	public static HashMap<String, BlockEntry<IronBarsBlock>> BAR_PANELS = new HashMap<>();
+	public static HashMap<String, BlockEntry<DecoDoorBlock>> DOORS          = new HashMap<>();
+	public static HashMap<String, BlockEntry<DecoDoorBlock>> LOCK_DOORS     = new HashMap<>();
+	public static HashMap<String, BlockEntry<DecoTrapDoorBlock>> TRAPDOORS  = new HashMap<>();
+	public static HashMap<String, BlockEntry<DecoBarsBlock>> BARS       = new HashMap<>();
+	public static HashMap<String, BlockEntry<DecoBarsBlock>> BAR_PANELS = new HashMap<>();
 	public static HashMap<String, BlockEntry<MeshFenceBlock>> MESH_FENCES   = new HashMap<>();
 	public static HashMap<String, BlockEntry<ConnectedPillarBlock>> SHEET_METAL_PILLARS = new HashMap<>();
 
@@ -154,7 +159,7 @@ public class BlockRegistry {
 
 
 	private static void registerCageLamps (String metal, Function<String, Item> getter) {
-		ResourceLocation cage = new ResourceLocation(CreateDecoMod.MOD_ID,
+		ResourceLocation cage = ResourceLocation.fromNamespaceAndPath(CreateDecoMod.MOD_ID,
 				"block/palettes/cage_lamp/"
 						+ metal.toLowerCase(Locale.ROOT).replaceAll(" ", "_") + "_lamp"
 		);
@@ -353,9 +358,9 @@ public class BlockRegistry {
 	private static void registerCoins (String metal, Function<String, Item> getter) {
 		if (metal.equals("Andesite")) return;
 		String regName = metal.toLowerCase(Locale.ROOT).replaceAll(" ", "_");
-		ResourceLocation side   = new ResourceLocation(CreateDecoMod.MOD_ID, "block/" + regName + "_coinstack_side");
-		ResourceLocation top    = new ResourceLocation(CreateDecoMod.MOD_ID, "block/" + regName + "_coinstack_top");
-		ResourceLocation bottom = new ResourceLocation(CreateDecoMod.MOD_ID, "block/" + regName + "_coinstack_bottom");
+		ResourceLocation side   = ResourceLocation.fromNamespaceAndPath(CreateDecoMod.MOD_ID, "block/" + regName + "_coinstack_side");
+		ResourceLocation top    = ResourceLocation.fromNamespaceAndPath(CreateDecoMod.MOD_ID, "block/" + regName + "_coinstack_top");
+		ResourceLocation bottom = ResourceLocation.fromNamespaceAndPath(CreateDecoMod.MOD_ID, "block/" + regName + "_coinstack_bottom");
 
 		COIN_BLOCKS.put(metal, Coins.buildCoinStackBlock(
 				CreateDecoMod.REGISTRATE,
@@ -367,7 +372,7 @@ public class BlockRegistry {
 	private static void registerBricks () {
 		BRICK_COLORS.forEach( (color, name)-> {
 			ArrayList<BlockBuilder<Block, ?>>     blocks;
-			ArrayList<BlockBuilder<StairBlock,?>> stairs;
+			ArrayList<BlockBuilder<DecoStairsBlock,?>> stairs;
 			ArrayList<BlockBuilder<SlabBlock,?>>  slabs;
 			ArrayList<BlockBuilder<WallBlock,?>>  walls;
 

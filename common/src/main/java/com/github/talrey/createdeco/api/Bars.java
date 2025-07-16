@@ -1,6 +1,7 @@
 package com.github.talrey.createdeco.api;
 
 import com.github.talrey.createdeco.BlockStateGenerator;
+import com.github.talrey.createdeco.blocks.subclasses.DecoBarsBlock;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.builders.BlockBuilder;
@@ -17,14 +18,13 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.SoundType;
 
 import java.util.Locale;
 import java.util.function.Supplier;
 
 public class Bars {
-  public static BlockBuilder<IronBarsBlock, ?> build (
+  public static BlockBuilder<DecoBarsBlock, ?> build (
           CreateRegistrate reg, String metal, String suffix, boolean doPost
   ) {
     String base = metal.replace(' ', '_').toLowerCase(Locale.ROOT).replaceAll(" ", "_") + "_bars";
@@ -35,19 +35,19 @@ public class Bars {
     final ResourceLocation bartex, postex;
     //try {
     if (metal.equals("Iron")) {
-      barTexture = new ResourceLocation("minecraft", "block/iron_bars");
+      barTexture = ResourceLocation.fromNamespaceAndPath("minecraft", "block/iron_bars");
       postTexture = barTexture;
     }
     else {
-      barTexture = new ResourceLocation(reg.getModid(), "block/palettes/metal_bars/" + base);
-      postTexture = new ResourceLocation(reg.getModid(), post);
+      barTexture = ResourceLocation.fromNamespaceAndPath(reg.getModid(), "block/palettes/metal_bars/" + base);
+      postTexture = ResourceLocation.fromNamespaceAndPath(reg.getModid(), post);
     }
 
     // for lambda stuff, must be final
     bartex = barTexture;
     postex = postTexture;
 
-    var block = reg.block(base + suf, IronBarsBlock::new)
+    var block = reg.block(base + suf, DecoBarsBlock::factory)
             .properties(props -> props.noOcclusion().strength(5, 6)
               .requiresCorrectToolForDrops()
               .sound(SoundType.NETHERITE_BLOCK))

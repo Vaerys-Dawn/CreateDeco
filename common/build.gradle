@@ -43,3 +43,10 @@ dependencies {
     modCompileOnly("com.simibubi.create:create-${minecraft_version}:${create_neoforge_version}")
     implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_neoforge_version}")
 }
+
+sourceSets.main {
+    resources {
+        srcDir("src/generated/resources")
+        exclude("src/generated/resources/.cache")
+    }
+}

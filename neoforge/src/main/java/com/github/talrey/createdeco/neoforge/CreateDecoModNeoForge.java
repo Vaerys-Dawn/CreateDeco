@@ -4,7 +4,6 @@ import com.github.talrey.createdeco.CreateDecoMod;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.common.NeoForge;
 
 @Mod(CreateDecoMod.MOD_ID)
 public class CreateDecoModNeoForge {
@@ -13,6 +12,9 @@ public class CreateDecoModNeoForge {
         IEventBus eventBus = ModLoadingContext.get().getActiveContainer().getEventBus();
         CreativeTabsImpl.register(eventBus);
         CreateDecoMod.REGISTRATE.registerEventListeners(eventBus);
+
+        // registers datagen listener to be used in the neoforge data runtime
+        eventBus.addListener(CreateDecoModData::gatherData);
 //        NeoForge.EVENT_BUS.register(this);
         CreateDecoMod.init();
     }

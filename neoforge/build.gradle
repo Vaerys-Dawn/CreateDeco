@@ -2,6 +2,8 @@ plugins {
     id 'com.gradleup.shadow'
 }
 
+def generatedResources = file("src/generated")
+
 architectury {
     platformSetupLoomIde()
     neoForge()
@@ -21,6 +23,33 @@ configurations {
     shadowBundle {
         canBeResolved = true
         canBeConsumed = false
+    }
+}
+
+sourceSets {
+    main {
+        resources.srcDir generatedResources
+    }
+}
+
+loom {
+    runs {
+        data {
+            data()
+//            programArgs('--mod', "createdeco", '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath())
+            //, "${mod_version}"
+            programArgs '--mod', "createdeco", "--all"
+            programArgs '--output', generatedResources.getAbsolutePath()
+            programArgs '--existing', project(':common').file('src/main/resources').getAbsolutePath()
+//            client()
+//
+//            name "Data Generation"
+//            vmArg "-Dfabric-api.datagen"
+//            vmArg "-Dfabric-api.datagen.output-dir=${file("src/generated/resources")}"
+//            vmArg "-Dfabric-api.datagen.modid=createdeco"
+//            vmArg "-Dporting_lib.datagen.existing_resources=${file("src/main/resources")}"
+//            environmentVariable("DATAGEN", "TRUE")
+        }
     }
 }
 

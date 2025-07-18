@@ -1,0 +1,24 @@
+package com.github.talrey.createdeco;
+
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
+
+@Mod(CreateDecoMod.MOD_ID)
+public class CreateDecoModNeoForge {
+
+    public CreateDecoModNeoForge() {
+        // registrate must be given the mod event bus on forge before registration
+        IEventBus eventBus = ModLoadingContext.get().getActiveContainer().getEventBus();
+        CreativeTabs.register(eventBus);
+
+        CreateDecoMod.init();
+        CreateDecoMod.REGISTRATE.registerEventListeners(eventBus);
+
+        // registers datagen listener to be used in the neoforge data runtime
+//        eventBus.addListener(CreateDecoModData::gatherData);
+//        NeoForge.EVENT_BUS.register(this);
+
+    }
+
+}
